@@ -25,7 +25,6 @@ pipeline {
             steps {
                sh """
                 npm install
-                ls -ltr 
                 echo "application version: $appVersion"
                """
             }
@@ -34,7 +33,6 @@ pipeline {
             steps{
                 sh """
                 zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
-                ls -ltr
                 """
             }
         }
