@@ -9,6 +9,7 @@ pipeline {
     }
     environment{
         def appVersion = '' //variable declaration
+        nexusUrl = 'nexus.expensesnote.site'
     }
 
     stages {
@@ -35,6 +36,28 @@ pipeline {
                 zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
                 ls -ltr
                 """
+            }
+        }
+
+        stage('Nexus artifact uploader'){
+            steps{
+                script{
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "${nexusUrl}",
+                        groupId: 'com.expense',
+                        version: "${appVersion}",
+                        repository: "backend",
+                        credentialsId: 'nexus-auth',
+                        artifacts: [
+                            [artifactId: "backend",
+                            classifier: '',
+                            file: "backend-" + "${appVersion}" + '.zip',
+                            type: 'zip']
+                        ]
+                    )
+                }
             }
         }
         
