@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('read the version'){
             steps{
-                script{
+                script{  //groovy script syntax
                     def packageJson = readJSON file: 'package.json'
                     appVersion = packageJson.version
                     echo "application version: $appVersion"
@@ -19,9 +19,10 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
+            steps {   //shell script syntax
                 sh """
                 echo 'this is to test'
+                echo '$appVersion'
                 """
             }
         }
