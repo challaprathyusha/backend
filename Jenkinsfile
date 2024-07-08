@@ -9,7 +9,7 @@ pipeline {
     }
     environment{
         def appVersion = '' //variable declaration
-        nexusUrl = 'nexus.expensesnote.site'
+        nexusUrl = 'nexus.expensesnote.site:8081'
     }
 
     stages {
